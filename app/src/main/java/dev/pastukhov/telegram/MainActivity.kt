@@ -14,6 +14,7 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import dev.pastukhov.telegram.databinding.ActivityMainBinding
+import dev.pastukhov.telegram.ui.ChatsFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,6 +37,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun initFunc() {
         setSupportActionBar(toolbar)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.dataContainer,ChatsFragment()).commit()
         createHeader()
         createDrawer()
     }
@@ -115,8 +118,6 @@ class MainActivity : AppCompatActivity() {
                     return false
                 }
             }).build()
-
-
     }
 
     private fun createHeader() {
