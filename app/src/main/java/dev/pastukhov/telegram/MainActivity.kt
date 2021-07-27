@@ -14,7 +14,7 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import dev.pastukhov.telegram.databinding.ActivityMainBinding
-import dev.pastukhov.telegram.ui.ChatsFragment
+import dev.pastukhov.telegram.ui.SettingsFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,13 +37,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun initFunc() {
         setSupportActionBar(toolbar)
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.dataContainer,ChatsFragment()).commit()
         createHeader()
         createDrawer()
     }
 
     private fun createDrawer() {
+
+        val settingsItem = PrimaryDrawerItem()
+            .withIdentifier(106)
+            .withIconTintingEnabled(true)
+            .withName("Настройки")
+            .withSelectable(false)
+            .withIcon(R.drawable.ic_menu_settings)
 
         val menuItems = arrayOf(
             PrimaryDrawerItem()
@@ -78,11 +83,7 @@ class MainActivity : AppCompatActivity() {
                 .withName("Избранное")
                 .withSelectable(false)
                 .withIcon(R.drawable.ic_menu_favorites),
-            PrimaryDrawerItem().withIdentifier(106)
-                .withIconTintingEnabled(true)
-                .withName("Настройки")
-                .withSelectable(false)
-                .withIcon(R.drawable.ic_menu_settings),
+            settingsItem,
             PrimaryDrawerItem().withIdentifier(107)
                 .withIconTintingEnabled(true)
                 .withName("Создать группу")
@@ -114,6 +115,15 @@ class MainActivity : AppCompatActivity() {
                     position: Int,
                     drawerItem: IDrawerItem<*>
                 ): Boolean {
+
+                    when (drawerItem) {
+                        settingsItem -> {
+                            supportFragmentManager.beginTransaction()
+                                .addToBackStack(null)
+                                .replace(R.id.dataContainer, SettingsFragment()).commit()
+                        }
+                    }
+
                     Toast.makeText(applicationContext, position.toString(), Toast.LENGTH_SHORT).show()
                     return false
                 }
