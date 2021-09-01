@@ -3,6 +3,7 @@ package dev.pastukhov.telegram
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import dev.pastukhov.telegram.activities.RegisterActivity
 import dev.pastukhov.telegram.databinding.ActivityMainBinding
 import dev.pastukhov.telegram.ui.fragments.ChatsFragment
 import dev.pastukhov.telegram.ui.objects.AppDrawer
@@ -10,7 +11,7 @@ import dev.pastukhov.telegram.ui.objects.AppDrawer
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var appDrawer:AppDrawer
+    private lateinit var appDrawer: AppDrawer
     private lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,18 +27,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initFunc() {
-        setSupportActionBar(toolbar)
-        appDrawer.create()
-
-        supportFragmentManager.beginTransaction()
-            .addToBackStack(null)
-            .replace(R.id.dataContainer, ChatsFragment()).commit()
+        if (false) {
+            setSupportActionBar(toolbar)
+            appDrawer.create()
+            replaceFragment(ChatsFragment())
+        } else {
+            replaceActivity(RegisterActivity())
+        }
     }
 
 
     private fun initFields() {
         toolbar = binding.mainToolbar
-        appDrawer= AppDrawer(this, toolbar)
+        appDrawer = AppDrawer(this, toolbar)
 
     }
 }
